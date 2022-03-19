@@ -4,7 +4,7 @@ This library provides a consistent way to check if a given feature is enabled in
 
 ## Motivation
 
-Salesforce has multiple ways of determining if a user should have access to be able to perform a function. Including but not limited to Custom Permissions, Custom Settings, Custom Metadata and Permission Sets/Profiles. This can result in codebases having multiple ways of dealing with granting access to features.
+Salesforce has multiple ways of determining if a user should have access to be able to perform a function, including but not limited to Custom Permissions, Custom Settings, Custom Metadata and Permission Sets/Profiles. This can result in codebases having multiple ways of dealing with granting access to features.
 
 The goal of this project is to provide an abstraction on top of these different methodologies and provide a consistent API for apex to use. This library will also contain some common implementations as well as an extension point to add in your own implementations.
 
