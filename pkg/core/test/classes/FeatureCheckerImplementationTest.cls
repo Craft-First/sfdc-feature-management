@@ -1,9 +1,7 @@
 @IsTest(IsParallel=true)
 private class FeatureCheckerImplementationTest {
-
     @IsTest
     private static void shouldReturnFalseWithNoImplementation() {
-
         String featureName = 'myTestFeature';
         FeatureChecker featureManagement = new FeatureCheckerImplementation();
 
@@ -15,7 +13,6 @@ private class FeatureCheckerImplementationTest {
 
     @IsTest
     private static void shouldReturnTrueWithMockImplementation() {
-
         String featureName = 'myTestFeature';
         FeatureChecker featureManagement = new FeatureCheckerImplementation(
             new MockFeatureSettingsProvider()
@@ -31,7 +28,6 @@ private class FeatureCheckerImplementationTest {
      * @description Mock Feature Settings Provider
      */
     public class MockFeatureSettingsProvider implements FeatureSettingsProvider {
-
         /**
          * @description Returns Feature Setting Object by Feature Name
          *  if not found should return null
@@ -39,11 +35,7 @@ private class FeatureCheckerImplementationTest {
          * @return Feature Setting Object null if not found
          */
         public FeatureSetting getFeatureSettingByName(String featureName) {
-
-            return new FeatureSetting(
-                featureName,
-                new MockFeature()
-            );
+            return new FeatureSetting(featureName, new MockFeature());
         }
     }
 
@@ -51,7 +43,6 @@ private class FeatureCheckerImplementationTest {
      * @description Mock Feature
      */
     public class MockFeature implements Feature {
-
         /**
          * @description always enabled
          * @param featureName

@@ -3,7 +3,6 @@
  * Returns the feature settings
  */
 public interface FeatureSettingsProvider {
-
     /**
      * @description Returns Feature Setting Object by Feature Name
      *  if not found should return null

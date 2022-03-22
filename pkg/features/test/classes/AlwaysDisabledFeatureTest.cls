@@ -1,6 +1,5 @@
 @IsTest(IsParallel=true)
 private class AlwaysDisabledFeatureTest {
-
     @IsTest
     private static void shouldAlwaysReturnFalse() {
         String featureName = 'feature';

@@ -2,7 +2,6 @@
  * @description Base Interface for all feature flags
  */
 public interface Feature {
-
     /**
      * @description Returns true if feature is enabled
      *

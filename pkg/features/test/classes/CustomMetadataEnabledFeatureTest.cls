@@ -1,6 +1,5 @@
 @IsTest(IsParallel=true)
 private class CustomMetadataEnabledFeatureTest {
-
     @IsTest
     private static void shouldReturnFalseIfNullFeature() {
         String featureName = 'My Test Feature';

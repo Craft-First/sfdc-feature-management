@@ -2,7 +2,6 @@
  * @description Apex Representation of a Feature Setting
  */
 public class FeatureSetting {
-
     /** @description featureName */
     public String featureName;
 

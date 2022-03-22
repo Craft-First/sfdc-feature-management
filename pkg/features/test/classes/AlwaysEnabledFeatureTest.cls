@@ -1,6 +1,5 @@
 @IsTest(IsParallel=true)
 private class AlwaysEnabledFeatureTest {
-
     @IsTest
     private static void shouldAlwaysReturnTrue() {
         String featureName = 'myFeature';

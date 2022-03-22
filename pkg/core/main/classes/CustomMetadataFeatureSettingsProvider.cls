@@ -3,7 +3,6 @@
  * from the FeatureSetting__mdt Custom Metadata
  */
 public class CustomMetadataFeatureSettingsProvider implements FeatureSettingsProvider {
-
     /**
      * @description Returns Feature Setting Object by Feature Name
      *  if not found should return null
@@ -33,15 +32,14 @@ public class CustomMetadataFeatureSettingsProvider implements FeatureSettingsPro
             Object obj = implementationType.newInstance();
             Feature feature = (Feature) obj;
 
-            return new FeatureSetting(
-                featureName,
-                feature
-            );
+            return new FeatureSetting(featureName, feature);
         } catch (Exception ex) {
             System.debug(
                 LoggingLevel.WARN,
                 'Could not instantiate class, or instance is not a Feature: ' +
-                implementationType.getName() + '. ' + ex.getMessage()
+                implementationType.getName() +
+                '. ' +
+                ex.getMessage()
             );
             return null;
         }
