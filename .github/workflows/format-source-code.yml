@@ -1,0 +1,35 @@
+# Unique name for this workflow
+name: Format Source Code
+
+# Definition when the workflow should run
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize]
+
+# Jobs to be executed
+jobs:
+  format-source-format:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the code in the PR
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      # Install Node JS
+      - name: Install NodeJS
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci --no-audit --prefer-offline
+
+      # Verify Source Format with Prettier
+      - name: Check format with Prettier
+        run: |
+          git diff -z --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha}}...${{ github.event.pull_request.head.sha }} | xargs -0 -I {} npx prettier --ignore-unknown --write "{}"

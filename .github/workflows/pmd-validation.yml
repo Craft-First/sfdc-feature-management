@@ -1,5 +1,5 @@
 # Unique name for this workflow
-name: PR validation
+name: PMD Validation
 
 # Definition when the workflow should run
 on:
@@ -28,33 +28,6 @@ jobs:
         run: |
           echo "::set-output name=all::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs)"
           echo "::set-output name=metadata::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep --regexp "^pkg/" | xargs)"
-  validate-source-format:
-    runs-on: ubuntu-latest
-    steps:
-      # Checkout the code in the PR
-      - name: Checkout repository
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.sha }}
-
-      # Install Node JS
-      - name: Install NodeJS
-        uses: actions/setup-node@v2
-        with:
-          node-version: "14"
-          cache: "npm"
-
-      - name: Install dependencies
-        run: npm ci --no-audit --prefer-offline
-
-      # Verify Source Format with Prettier
-      - name: Check format with Prettier
-        #run: npx prettier --check --ignore-unknown -- ${{ needs.get-changed-files.outputs.all }}
-        # run: |
-        # git diff -z --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs -0 -I {} npx prettier --ignore-unknown --check "{}"
-        run: |
-          git diff -z --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha}}...${{ github.event.pull_request.head.sha }} | xargs -0 -I {} npx prettier --ignore-unknown --check "{}"
 
   static-code-analysis:
     name: Review
