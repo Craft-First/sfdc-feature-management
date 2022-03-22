@@ -50,7 +50,7 @@ jobs:
         with:
           dry: True
           only_changed: True
-          prettier_plugins: prettier-plugin-apex
+          prettier_plugins: prettier-plugin-apex prettier/plugin-xml
 
   static-code-analysis:
     name: Review
