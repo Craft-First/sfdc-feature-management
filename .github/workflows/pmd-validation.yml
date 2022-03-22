@@ -1,13 +1,10 @@
-# Unique name for this workflow
 name: PMD Validation
-
-# Definition when the workflow should run
 on:
-  workflow_dispatch:
+  workflow_dispatch: null
   pull_request:
-    types: [opened, synchronize]
-
-# Jobs to be executed
+    types:
+      - opened
+      - synchronize
 jobs:
   static-code-analysis:
     name: Review
@@ -21,15 +18,15 @@ jobs:
       - name: PMD
         uses: rody/pmd-github-action@main
         with:
-          rulesets: "./pmd-ruleset.xml"
-          reportfile: "pmd-report.json"
-          format: "json"
+          rulesets: ./pmd-ruleset.xml
+          reportfile: pmd-report.json
+          format: json
           failOnViolation: "false"
           showsuppressed: "true"
       - name: Create Review from PMD report
         uses: rody/pmd-review-github-action@main
         with:
-          reportfile: "pmd-report.json"
+          reportfile: pmd-report.json
           pr-number: ${{ github.event.number }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
