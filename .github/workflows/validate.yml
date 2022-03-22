@@ -34,6 +34,9 @@ jobs:
       # Checkout the code in the PR
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
 
       # Install Node JS
       - name: Install NodeJS
