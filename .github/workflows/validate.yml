@@ -49,7 +49,7 @@ jobs:
         run: npm ci --no-audit --prefer-offline
       # Verify Source Format with Prettier
       - name: Check format with Prettier
-        run: git diff -z --name-only --diff-filter=ACMRT | xargs -0 -I {} npx prettier --ignore-unknown --check "{}"
+        run: npx prettier --check -- ${{ needs.get-changed-files.outputs.all }}
 
   static-code-analysis:
     name: Review
