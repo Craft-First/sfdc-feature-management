@@ -30,12 +30,20 @@ jobs:
           echo "::set-output name=metadata::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep --regexp "^pkg/" | xargs)"
   validate-source-format:
     runs-on: ubuntu-latest
-
     steps:
       # Checkout the code in the PR
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      # Install Node JS
+      - name: Install NodeJS
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci --no-audit --prefer-offline
       # Verify Source Format with Prettier
       - name: Check format with Prettier
         uses: creyD/prettier_action@v4.2
