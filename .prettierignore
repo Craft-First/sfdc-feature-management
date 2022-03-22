@@ -39,5 +39,3 @@ logs
 .markdownlintignore
 .prettierignore
 .sfdx/
-.forceignore
-jest.config.js

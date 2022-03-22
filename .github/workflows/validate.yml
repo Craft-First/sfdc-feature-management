@@ -49,7 +49,7 @@ jobs:
         run: npm ci --no-audit --prefer-offline
       # Verify Source Format with Prettier
       - name: Check format with Prettier
-        run: npx prettier --check -- ${{ needs.get-changed-files.outputs.all }}
+        run: npx prettier --check --ignore-unknown -- ${{ needs.get-changed-files.outputs.all }}
 
   static-code-analysis:
     name: Review
