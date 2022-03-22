@@ -1,5 +1,5 @@
 # Unique name for this workflow
-name: Format Source Code
+name: Validate Source Code
 
 # Definition when the workflow should run
 on:
@@ -9,7 +9,7 @@ on:
 
 # Jobs to be executed
 jobs:
-  format-source-format:
+  validate-source-code-format:
     runs-on: ubuntu-latest
     steps:
       # Checkout the code in the PR
@@ -32,4 +32,4 @@ jobs:
       # Verify Source Format with Prettier
       - name: Check format with Prettier
         run: |
-          git diff -z --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha}}...${{ github.event.pull_request.head.sha }} | xargs -0 -I {} npx prettier --ignore-unknown --write "{}"
+          git diff -z --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha}}...${{ github.event.pull_request.head.sha }} | xargs -0 -I {} npx prettier --ignore-unknown --validate "{}"
