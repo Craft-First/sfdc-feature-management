@@ -8,6 +8,7 @@
     "lint:aura": "eslint **/aura/**",
     "lint:lwc": "eslint **/lwc/**",
     "test": "npm run test:unit",
+    "posttest": "npm run format",
     "test:unit": "sfdx-lwc-jest",
     "test:unit:watch": "sfdx-lwc-jest --watch",
     "test:unit:debug": "sfdx-lwc-jest --debug",
@@ -16,7 +17,7 @@
     "prettier:verify": "prettier --list-different \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\"",
     "postinstall": "husky install",
     "precommit": "lint-staged",
-    "format": "npx prettier --ignore-unknown --write .",
+    "format": "prettier --loglevel warn --write \"**/*.{js,css,md}\"",
     "lint:prettier": "npx prettier --ignore-unknown --check ."
   },
   "devDependencies": {
