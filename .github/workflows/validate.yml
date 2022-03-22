@@ -30,6 +30,9 @@ jobs:
           echo "::set-output name=metadata::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep --regexp "^pkg/" | xargs)"
   validate-source-format:
     runs-on: ubuntu-latest
+    needs: get-changed-files
+    # only run if there are changed files
+    if: ${{needs.get-changed-files.outputs.all}}
     steps:
       # Checkout the code in the PR
       - name: Checkout repository
@@ -46,11 +49,7 @@ jobs:
         run: npm ci --no-audit --prefer-offline
       # Verify Source Format with Prettier
       - name: Check format with Prettier
-        uses: creyD/prettier_action@v4.2
-        with:
-          dry: True
-          only_changed: True
-          prettier_plugins: prettier-plugin-apex @prettier/plugin-xml
+        run: git diff -z --name-only --diff-filter=ACMRT origin/${{ github.event.pull_request.base.ref}}...origin/${{ github.event.pull_request.head.ref }} | xargs -0 -I {} npx prettier --ignore-unknown --check "{}"
 
   static-code-analysis:
     name: Review
