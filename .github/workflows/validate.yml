@@ -48,8 +48,9 @@ jobs:
       - name: Check format with Prettier
         uses: creyD/prettier_action@v4.2
         with:
-          dry: true
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          dry: True
+          only_changed: True
+          prettier_plugins: prettier-plugin-apex
 
   static-code-analysis:
     name: Review
