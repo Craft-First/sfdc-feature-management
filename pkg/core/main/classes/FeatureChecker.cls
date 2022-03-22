@@ -5,7 +5,7 @@
 public interface FeatureChecker {
     /**
      * @decsription Returns true if feature is enabled
-     * @param feature feature to be checked
+     * @param featureName feature to be checked
      * @return true if enabled
      */
     Boolean isEnabled(String featureName);
