@@ -1,0 +1,78 @@
+# Unique name for this workflow
+name: PR validation
+
+# Definition when the workflow should run
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize]
+
+# Jobs to be executed
+jobs:
+  get-changed-files:
+    runs-on: ubuntu-latest
+    outputs:
+      all: ${{ steps.changes.outputs.all }}
+      metadata: ${{ steps.changes.outputs.metadata }}
+    steps:
+      # Checkout the code in the PR
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      # Get only files that have changed
+      - name: Get changed files
+        id: changes
+        shell: bash
+        run: |
+          echo "::set-output name=all::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs)"
+          echo "::set-output name=metadata::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep --regexp "^pkg/" | xargs)"
+  validate-source-format:
+    runs-on: ubuntu-latest
+    needs: get-changed-files
+    # only run if there are changed files
+    #if: ${{needs.get-changed-files.outputs.all}}
+    if: ${{ false }} # temporarly deactivate the unit test
+    steps:
+      # Checkout the code in the PR
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Install Node JS
+      - name: Install NodeJS
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci --no-audit --prefer-offline
+      # Verify Source Format with Prettier
+      - name: Check format with Prettier
+        run: npx prettier --check -- ${{ needs.get-changed-files.outputs.all }}
+
+  static-code-analysis:
+    name: Review
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+          ref: ${{ github.event.pull_request.head.ref }}
+      - name: PMD
+        uses: rody/pmd-github-action@main
+        with:
+          rulesets: "./pmd-ruleset.xml"
+          reportfile: "pmd-report.json"
+          format: "json"
+          failOnViolation: "false"
+          showsuppressed: "true"
+      - name: Create Review from PMD report
+        uses: rody/pmd-review-github-action@main
+        with:
+          reportfile: "pmd-report.json"
+          pr-number: ${{ github.event.number }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
