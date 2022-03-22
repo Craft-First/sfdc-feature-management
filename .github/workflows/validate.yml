@@ -32,8 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: get-changed-files
     # only run if there are changed files
-    #if: ${{needs.get-changed-files.outputs.all}}
-    if: ${{ false }} # temporarly deactivate the unit test
+    if: ${{needs.get-changed-files.outputs.all}}
     steps:
       # Checkout the code in the PR
       - name: Checkout repository
