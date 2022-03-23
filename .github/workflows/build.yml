@@ -25,10 +25,28 @@ jobs:
         shell: bash
         run: |
           echo "${{ secrets.DEVHUB_AUTH_URL }}" > ./AUTH_URL
-        # Authenticate dev hub
+      # Authenticate dev hub
       - name: "Authenicate Org"
         run: "sfdx auth:sfdxurl:store -f ./AUTH_URL -a devhub"
-
-        # Create Package
+      # Create Package
       - name: "Create package"
-        run: "sfdx force:package:version:create -c -d pkg/ -f config/project-scratch-def.json -x -v devhub -w 300"
+        run: |
+          packageId=$( sfdx force:package:version:create -c -d pkg/ -f config/project-scratch-def.json -x -v devhub -w 300 --json | jq .result.SubscriberPackageVersionId )
+          echo "PACKAGE_ID=${packageId}" >> $GITHUB_ENV
+      # Create Package
+      - name: "Fetch Test Results"
+        run: |
+          testCoverage=$( sfdx force:package:version:report -p ${{ env.PACKAGE_ID }} -v devhub --json | jq .result.CodeCoverage.apexCodeCoveragePercentage )
+          echo "TEST_COVERAGE=${testCoverage}" >> $GITHUB_ENV
+
+      - name: Publish Test Results
+        uses: schneegans/dynamic-badges-action@v1.1.0
+        with:
+          auth: ${{ secrets.GIST_SECRET }}
+          gistID: ${{ secrets.GIST_ID }}
+          filename: feature-management-test.json
+          label: Code Coverage
+          message: ${{ env.TEST_COVERAGE }}%
+          color: green
+          namedLogo: "Salesforce"
+          isError: ${{ env.TEST_COVERAGE < 75}}
