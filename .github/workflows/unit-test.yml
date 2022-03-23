@@ -36,12 +36,16 @@ jobs:
         run: sfdx force:org:create -f config/project-scratch-def.json -a scratch-org -s -d 1 -v devhub
 
       # Push Source Code
-      - name: "Push source to scratch org"
+      - name: "Push Source to Scratch Org"
         run: "sfdx force:source:push -u scratch-org"
 
       # Run Unit Tests
       - name: "Run Unit Tests"
         run: "sfdx force:apex:test:run -c -r human -l RunLocalTests -u scratch-org -w 300"
+
+      # Validate Test Coverage
+      - name: "Validate Test Coverage"
+        run: "sfdx sfpowerscripts:apextests:validate -t 75 -u scratch-org"
 
       # Delete Scratch Org
       - name: "Delete Scratch Org"
