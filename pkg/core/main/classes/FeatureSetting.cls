@@ -36,7 +36,7 @@ public class FeatureSetting {
             return (Feature) obj;
         } catch (Exception ex) {
             throw new IllegalArgumentException(
-                'Implementation Cannot be Instantiated or is Not a Feature',
+                'Implementation cannot be instantiated or is not a feature',
                 ex
             );
         }
