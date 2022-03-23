@@ -29,7 +29,7 @@ jobs:
 
       # Authorised Org
       - name: "Authenicate Org"
-        run: "sfdx auth:sfdxurl:store -f ./AUTH_URL -a devhub -r https://login.salesforce.com"
+        run: "sfdx auth:sfdxurl:store -f ./AUTH_URL -a devhub"
 
       # Create Scratch Org
       - name: "Create New Scratch Org"
