@@ -21,11 +21,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Copy Dev Hub server key to file
-      - name: "Copy Dev Hub server key to file"
+      # Copy Auth URL to file
+      - name: "Copy Auth URL to file"
         shell: bash
         run: |
-          echo "${secrets.DEVHUB_AUTH_URL}" > ./AUTH_URL
+          echo "${{ secrets.DEVHUB_AUTH_URL }}" > ./AUTH_URL
 
       # Authorised Org
       - name: "Authenicate Org"
