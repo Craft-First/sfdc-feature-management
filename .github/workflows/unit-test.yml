@@ -1,0 +1,44 @@
+# Unique name for this workflow
+name: Run Unit Tests
+
+# Definition when the workflow should run
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+
+# Jobs to be executed
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    container: dxatscale/sfpowerscripts
+    steps:
+      # Checkout the code in the pull request
+      - name: "Checkout source code"
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      # Copy Dev Hub server key to file
+      - name: "Copy Dev Hub server key to file"
+        shell: bash
+        run: |
+          echo "${secrets.DEVHUB_AUTH_URL}" > ./AUTH_URL
+
+      # Authorised Org
+      - name: "Authenicate Org"
+        run: "sfdx auth:sfdxurl:store -u ${{ secrets.DEVHUB_USERNAME }} -f ./AUTH_URL -a devhub -r https://login.salesforce.com"
+
+      # Create Scratch Org
+      - name: "Create New Scratch Org"
+        run: sfdx force:org:create -f config/default-scratch-def.json -a scratch-org -s -d 1 -v devhub
+
+      # Validate Against Org
+      - name: "Push source to scratch org"
+        run: "sfdx sfpowerscripts:orchestrator:validateAgainstOrg -u scratch-org"
+
+      # Delete Scratch Org
+      - name: "Delete Scratch Org"
+        run: "sfdx force:org:delete -p -u scratch-org"
