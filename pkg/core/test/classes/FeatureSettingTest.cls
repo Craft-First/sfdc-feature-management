@@ -58,7 +58,7 @@ private class FeatureSettingTest {
             System.assert(
                 ex.getMessage()
                     .contains(
-                        'Implementation Cannot be Instantiated or is Not a Feature'
+                        'Implementation cannot be instantiated or is not a feature'
                     ),
                 'Unexpected Error Message'
             );
