@@ -35,7 +35,7 @@ private class FeatureCheckerImplementationTest {
          * @return Feature Setting Object null if not found
          */
         public FeatureSetting getFeatureSettingByName(String featureName) {
-            return new FeatureSetting(featureName, new MockFeature());
+            return new FeatureSetting(featureName, MockFeature.class.getName());
         }
     }
 

@@ -3,9 +3,10 @@ private class FeatureSettingTest {
     @IsTest
     private static void testConstruction() {
         String featureName = 'myFeature';
-        Feature myFeature = new TestFeature();
-
-        FeatureSetting setting = new FeatureSetting(featureName, myFeature);
+        FeatureSetting setting = new FeatureSetting(
+            featureName,
+            TestFeature.class.getName()
+        );
 
         System.assert(setting != null, 'Setting should not have been null');
 
@@ -14,12 +15,54 @@ private class FeatureSettingTest {
             featureName,
             'Unexpected Feature Name'
         );
+    }
 
-        System.assertEquals(
-            setting.implementation,
-            myFeature,
-            'Unexpected Feature'
-        );
+    @IsTest
+    private static void shouldThrowExceptionWithNullName() {
+        String featureName = 'myFeature';
+        try {
+            new FeatureSetting(featureName, null);
+            System.assert(false, 'An exception should have been thrown');
+        } catch (Exception ex) {
+            System.assert(ex != null, 'An exception should have been thrown');
+            System.assert(
+                ex.getMessage().contains('Implementation cannot be blank'),
+                'Unexpected Error Message'
+            );
+        }
+    }
+
+    @IsTest
+    private static void shouldThrowExceptionWithNameThatisNotaType() {
+        String featureName = 'myFeature';
+        try {
+            new FeatureSetting(featureName, 'SomeClassName');
+            System.assert(false, 'An exception should have been thrown');
+        } catch (Exception ex) {
+            System.assert(ex != null, 'An exception should have been thrown');
+            System.assert(
+                ex.getMessage().contains('Implementation is not a Type'),
+                'Unexpected Error Message'
+            );
+        }
+    }
+
+    @IsTest
+    private static void shouldThrowExceptionWithNameThatisOfWrongType() {
+        String featureName = 'myFeature';
+        try {
+            new FeatureSetting(featureName, FeatureSetting.class.getName());
+            System.assert(false, 'An exception should have been thrown');
+        } catch (Exception ex) {
+            System.assert(ex != null, 'An exception should have been thrown');
+            System.assert(
+                ex.getMessage()
+                    .contains(
+                        'Implementation Cannot be Instantiated or is Not a Feature'
+                    ),
+                'Unexpected Error Message'
+            );
+        }
     }
 
     /**
