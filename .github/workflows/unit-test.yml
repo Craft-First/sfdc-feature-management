@@ -35,6 +35,10 @@ jobs:
       - name: "Create New Scratch Org"
         run: sfdx force:org:create -f config/project-scratch-def.json -a scratch-org -s -d 1 -v devhub
 
+      # Install sfpowerscripts artifact package
+      - name: "Install sfpowerscripts artefact package"
+        run: sfdx force:package:install -p "${{ secrets.SFPOWERSCRIPTS_ARTEFACT_PACKAGE_ID }}" -u scratch-org -w 300
+
       # Validate Against Org
       - name: "Push source to scratch org"
         run: "sfdx sfpowerscripts:orchestrator:validateAgainstOrg -u scratch-org"
