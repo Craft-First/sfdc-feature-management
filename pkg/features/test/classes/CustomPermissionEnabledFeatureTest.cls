@@ -1,6 +1,5 @@
 @IsTest(IsParallel=true)
 private class CustomPermissionEnabledFeatureTest {
-
     @IsTest
     private static void shouldThrowExceptionIfBlank() {
         String permissionName = '';
@@ -9,10 +8,7 @@ private class CustomPermissionEnabledFeatureTest {
         try {
             disabledFeature.isEnabled(permissionName);
         } catch (Exception ex) {
-            System.assert(
-                ex != null,
-                'An exception should have been thrown'
-            );
+            System.assert(ex != null, 'An exception should have been thrown');
 
             System.assert(
                 ex.getMessage().contains('feature cannot be blank'),
@@ -31,10 +27,7 @@ private class CustomPermissionEnabledFeatureTest {
         try {
             disabledFeature.isEnabled(permissionName);
         } catch (Exception ex) {
-            System.assert(
-                ex != null,
-                'An exception should have been thrown'
-            );
+            System.assert(ex != null, 'An exception should have been thrown');
 
             System.assert(
                 ex.getMessage().contains('feature cannot contain white spaces'),

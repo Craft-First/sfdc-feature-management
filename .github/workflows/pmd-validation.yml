@@ -1,0 +1,32 @@
+name: PMD Validation
+on:
+  workflow_dispatch: null
+  pull_request:
+    types:
+      - opened
+      - synchronize
+jobs:
+  static-code-analysis:
+    name: Review
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+          ref: ${{ github.event.pull_request.head.ref }}
+      - name: PMD
+        uses: rody/pmd-github-action@main
+        with:
+          rulesets: ./pmd-ruleset.xml
+          reportfile: pmd-report.json
+          format: json
+          failOnViolation: "false"
+          showsuppressed: "true"
+      - name: Create Review from PMD report
+        uses: rody/pmd-review-github-action@main
+        with:
+          reportfile: pmd-report.json
+          pr-number: ${{ github.event.number }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -4,7 +4,6 @@
  * to determin if the feature should be enabled
  */
 public class FeatureCheckerImplementation implements FeatureChecker {
-
     private FeatureSettingsProvider featureSettingsProvider;
 
     /**
@@ -19,7 +18,9 @@ public class FeatureCheckerImplementation implements FeatureChecker {
      * @description Constructor
      * @param featureSettingsProvider
      */
-    public FeatureCheckerImplementation(FeatureSettingsProvider featureSettingsProvider) {
+    public FeatureCheckerImplementation(
+        FeatureSettingsProvider featureSettingsProvider
+    ) {
         this.featureSettingsProvider = featureSettingsProvider;
     }
 
@@ -33,7 +34,6 @@ public class FeatureCheckerImplementation implements FeatureChecker {
      * @return true if enabled
      */
     public Boolean isEnabled(String featureName) {
-
         FeatureSetting featureSetting = this.featureSettingsProvider.getFeatureSettingByName(
             featureName
         );
@@ -42,8 +42,6 @@ public class FeatureCheckerImplementation implements FeatureChecker {
             return false;
         }
 
-        return featureSetting.implementation.isEnabled(
-            featureName
-        );
+        return featureSetting.implementation.isEnabled(featureName);
     }
 }

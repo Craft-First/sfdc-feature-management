@@ -2,7 +2,6 @@
  * @description Feature Implementation that is always enabled
  */
 public class AlwaysDisabledFeature implements Feature {
-
     /**
      * @description returns false for all features
      *
