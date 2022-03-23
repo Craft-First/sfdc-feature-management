@@ -1,5 +1,7 @@
 # Feature Management Library for Salesforce
 
+![Build](https://github.com/Craft-First/sfdc-feature-management/actions/workflows/build.yml/badge.svg)
+
 This library provides a consistent way to check if a given feature is enabled in
 Salesforce.
 

@@ -1,0 +1,34 @@
+# Unique name for this workflow
+name: Package Build
+
+# Definition when the workflow should run
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+# Jobs to be executed
+jobs:
+  build:
+    name: Build package
+    runs-on: ubuntu-latest
+    container: dxatscale/sfpowerscripts
+    steps:
+      # Checkout the code
+      - name: "Checkout source code"
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      # Copy Auth URL to file
+      - name: "Copy Auth URL to file"
+        shell: bash
+        run: |
+          echo "${{ secrets.DEVHUB_AUTH_URL }}" > ./AUTH_URL
+        # Authenticate dev hub
+      - name: "Authenicate Org"
+        run: "sfdx auth:sfdxurl:store -f ./AUTH_URL -a devhub"
+
+        # Create Package
+      - name: "Create package"
+        run: "sfdx force:package:version:create -c -d pkg/ -f config/project-scratch-def.json -x -v devhub -w 300"
