@@ -1,5 +1,5 @@
 # Unique name for this workflow
-name: Build
+name: Pacakge Build
 
 # Definition when the workflow should run
 on:
@@ -49,8 +49,8 @@ jobs:
         uses: schneegans/dynamic-badges-action@v1.1.0
         with:
           auth: ${{ secrets.GIST_SECRET }}
-          gistID: 37875c31d8b3c3c04cf1f1980778a67d
-          filename: test.json
+          gistID: ${{ secrets.GIST_ID }}
+          filename: feature-management-test.json
           label: Code Coverage
           message: ${{ env.TEST_COVERAGE }}%
           color: green
