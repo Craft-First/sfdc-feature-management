@@ -38,8 +38,6 @@ private class CustomPermissionEnabledFeatureTest {
 
     @IsTest
     private static void shouldReturnFalseWithoutPermission() {
-        // This is an invalid permission name and would cause
-        // FeatureManagement.checkPermission() to throw an exception
         String permissionName = 'doesntExist';
         Feature disabledFeature = new CustomPermissionEnabledFeature();
 
