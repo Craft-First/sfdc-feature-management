@@ -7,6 +7,7 @@ on:
   push:
     branches:
       - main
+
 # Jobs to be executed
 jobs:
   build:
@@ -28,17 +29,22 @@ jobs:
       # Authenticate dev hub
       - name: "Authenicate Org"
         run: "sfdx auth:sfdxurl:store -f ./AUTH_URL -a devhub"
+
       # Create Package
-      - name: "Create package"
+      - id: createPackage
+        name: "Create Package"
         run: |
-          packageId=$( sfdx force:package:version:create -c -d pkg/ -f config/project-scratch-def.json -x -v devhub -w 300 --json | jq .result.SubscriberPackageVersionId )
+          sfdx force:package:version:create -c -d pkg/ -f config/project-scratch-def.json -x -v devhub -w 300 --json > packageResult.json
+          result=$(jq .status packageResult.json)
+          test $result -eq 0
+          packageVersionId=$(jq .result.SubscriberPackageVersionId packageResult.json)
+          echo "PACKAGE_VERSION_ID=${packageVersionId}" >> $GITHUB_ENV
+          packageId=$(jq .result.Package2Id packageResult.json)
           echo "PACKAGE_ID=${packageId}" >> $GITHUB_ENV
-      # Get test results
       - name: "Fetch Test Results"
         run: |
-          testCoverage=$( sfdx force:package:version:report -p ${{ env.PACKAGE_ID }} -v devhub --json | jq .result.CodeCoverage.apexCodeCoveragePercentage )
+          testCoverage=$( sfdx force:package:version:report -p ${{ env.PACKAGE_VERSION_ID }} -v devhub --json | jq .result.CodeCoverage.apexCodeCoveragePercentage )
           echo "TEST_COVERAGE=${testCoverage}" >> $GITHUB_ENV
-      # Publish tests
       - name: Publish Test Results
         uses: schneegans/dynamic-badges-action@v1.1.0
         with:
@@ -50,3 +56,32 @@ jobs:
           color: green
           namedLogo: "Salesforce"
           isError: ${{ env.TEST_COVERAGE < 75}}
+
+      # Promote Package and create release
+      - name: Promote Package
+        if: contains(github.event.head_commit.message, 'release:')
+        run: |
+          sfdx force:package:version:promote -n -p ${{ env.PACKAGE_VERSION_ID }} -v devhub
+      - name: Get Version Details
+        if: contains(github.event.head_commit.message, 'release:')
+        run: |
+          sfdx force:package:version:list -v devhub -p ${{ env.PACKAGE_ID }} --json | jq . > packageList.json
+          versionId=$(jq '.result[] | select(.SubscriberPackageVersionId==${{ env.PACKAGE_VERSION_ID }}) | .Version ' packageList.json | tr -d '"')
+          echo "TAG=${versionId}" >> $GITHUB_ENV
+      - name: Create Release
+        if: contains(github.event.head_commit.message, 'release:')
+        uses: ncipollo/release-action@v1
+        with:
+          generateReleaseNotes: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ env.TAG }}
+
+      - name: Update README
+        if: contains(github.event.head_commit.message, 'release:')
+        run: |
+          sed -i -e "s/04t[[:alnum:]]\{15\}/${{ env.PACKAGE_VERSION_ID }}/" README.md
+          git config user.name "build.bot"
+          git config user.email "<>"
+          git add README.md
+          git commit -m "updating README with new version"
+          git push
