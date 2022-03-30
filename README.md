@@ -18,6 +18,11 @@ methodologies and provide a consistent API for apex to use. This library will
 also contain some common implementations as well as an extension point to add in
 your own implementations.
 
+## Installation Urls <a id="installation-url"></a>
+
+- [Production/Developer](https://login.salesforce.com/packaging/installPackage.apexp?p0=04t5f000000NpsuAAC)
+- [Sandbox](https://test.salesforce.com/packaging/installPackage.apexp?p0=04t5f000000NpsuAAC)
+
 ## How to Use
 
 When defining a feature that can be enabled/disabled a custom metadata entry
