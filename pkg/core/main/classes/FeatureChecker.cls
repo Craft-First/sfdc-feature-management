@@ -4,7 +4,7 @@
  */
 public interface FeatureChecker {
     /**
-     * @decsription Returns true if feature is enabled
+     * @description Returns true if feature is enabled
      * @param featureName feature to be checked
      * @return true if enabled
      */
