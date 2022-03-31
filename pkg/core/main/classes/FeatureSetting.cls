@@ -20,7 +20,7 @@ public class FeatureSetting {
     }
 
     private Feature getImplementation(String implementationName) {
-        if (implementationName == null || String.isBlank(implementationName)) {
+        if (String.isBlank(implementationName)) {
             throw new IllegalArgumentException(
                 'Implementation cannot be blank'
             );
