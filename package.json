@@ -21,6 +21,8 @@
     "lint:prettier": "npx prettier --ignore-unknown --check ."
   },
   "devDependencies": {
+    "@commitlint/cli": "^16.2.3",
+    "@commitlint/config-conventional": "^16.2.1",
     "@craft-first/prettier-config": "^0.2.1",
     "@lwc/eslint-plugin-lwc": "^1.0.1",
     "@prettier/plugin-xml": "^0.13.1",
