@@ -41,7 +41,7 @@ jobs:
 
       # Run Unit Tests
       - name: "Run Unit Tests"
-        run: "sfdx force:apex:test:run -c -r human -l RunLocalTests -u scratch-org -w 300"
+        run: "sfdx force:apex:test:run -c -r human -l RunLocalTests -u scratch-org -w 300 -d ./"
 
       # Validate Test Coverage
       - name: "Validate Test Coverage"
