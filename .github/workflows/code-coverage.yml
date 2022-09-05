@@ -1,21 +1,21 @@
 # Unique name for this workflow
-name: Run Unit Tests
+name: Code Coverage
 
 # Definition when the workflow should run
 on:
   workflow_dispatch:
-  pull_request:
-    types: [opened, synchronize, reopened]
+  push:
     branches:
       - main
 
 # Jobs to be executed
 jobs:
-  unit-tests:
+  code-coverage:
+    name: Code Coverage
     runs-on: ubuntu-latest
     container: dxatscale/sfpowerscripts
     steps:
-      # Checkout the code in the pull request
+      # Checkout the code
       - name: "Checkout source code"
         uses: actions/checkout@v2
         with:
@@ -27,7 +27,7 @@ jobs:
         run: |
           echo "${{ secrets.DEVHUB_AUTH_URL }}" > ./AUTH_URL
 
-      # Authorised Org
+      # Authenticate dev hub
       - name: "Authenicate Org"
         run: "sfdx auth:sfdxurl:store -f ./AUTH_URL -a devhub"
 
@@ -41,11 +41,13 @@ jobs:
 
       # Run Unit Tests
       - name: "Run Unit Tests"
-        run: "sfdx force:apex:test:run -c -r human -l RunLocalTests -u scratch-org -w 300 -d ./"
+        run: "sfdx force:apex:test:run --codecoverage --resultformat human -l RunLocalTests -u scratch-org -w 300 -d ./"
 
-      # Validate Test Coverage
-      - name: "Validate Test Coverage"
-        run: "sfdx sfpowerscripts:apextests:validate -t 75 -u scratch-org"
+      # Upload Test Results
+      - name: Upload test results to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          flags: Apex
 
       # Delete Scratch Org
       - name: "Delete Scratch Org"
