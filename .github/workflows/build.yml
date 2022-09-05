@@ -41,21 +41,6 @@ jobs:
           echo "PACKAGE_VERSION_ID=${packageVersionId}" >> $GITHUB_ENV
           packageId=$(jq .result.Package2Id packageResult.json)
           echo "PACKAGE_ID=${packageId}" >> $GITHUB_ENV
-      - name: "Fetch Test Results"
-        run: |
-          testCoverage=$( sfdx force:package:version:report -p ${{ env.PACKAGE_VERSION_ID }} -v devhub --json | jq .result.CodeCoverage.apexCodeCoveragePercentage )
-          echo "TEST_COVERAGE=${testCoverage}" >> $GITHUB_ENV
-      - name: Publish Test Results
-        uses: schneegans/dynamic-badges-action@v1.1.0
-        with:
-          auth: ${{ secrets.GIST_SECRET }}
-          gistID: ${{ secrets.GIST_ID }}
-          filename: feature-management-test.json
-          label: Code Coverage
-          message: ${{ env.TEST_COVERAGE }}%
-          color: green
-          namedLogo: "Salesforce"
-          isError: ${{ env.TEST_COVERAGE < 75}}
 
       # Promote Package and create release
       - name: Promote Package
