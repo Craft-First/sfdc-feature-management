@@ -44,12 +44,6 @@ private class PermissionSetEnabledFeatureTest {
             dao.getAssignmentsByUserIdAndPermissionSetName(null, null),
             'Should return empty list'
         );
-
-        System.assertEquals(
-            new List<PermissionSetAssignment>(),
-            dao.getAssignmentsByUserIdAndPermissionSetName('', ''),
-            'Should return empty list'
-        );
     }
 
     /**
