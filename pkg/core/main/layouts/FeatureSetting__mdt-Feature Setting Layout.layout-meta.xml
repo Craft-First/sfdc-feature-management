@@ -35,7 +35,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Implementation Parmeters</label>
+        <label>Implementation Parameters</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
