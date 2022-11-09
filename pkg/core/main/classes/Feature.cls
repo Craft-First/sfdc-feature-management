@@ -14,7 +14,7 @@ public abstract class Feature {
      * @description Sets the required parameters on a feature
      * @param params Map of input parameters
      */
-    public virtual void setRequiredParameters(Map<String, String> params) {
+    public virtual void setRequiredParameters(Map<String, Object> params) {
         return;
     }
 
