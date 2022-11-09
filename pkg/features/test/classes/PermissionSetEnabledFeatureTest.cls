@@ -59,7 +59,7 @@ private class PermissionSetEnabledFeatureTest {
         public Boolean returnPermSetName = false;
 
         /**
-         * @descriptions Returns a list of Permission Set Assignments for a
+         * @description Returns a list of Permission Set Assignments for a
          * given permission set name and userId
          * @param userId
          * @param permissionSetName

@@ -64,7 +64,7 @@ public with sharing class PermissionSetEnabledFeature extends Feature {
      */
     public interface PermissionSetDAO {
         /**
-         * @descriptions Returns a list of Permission Set Assignments for a
+         * @description Returns a list of Permission Set Assignments for a
          * given permission set name and userId
          * @param userId
          * @param permissionSetName
@@ -82,7 +82,7 @@ public with sharing class PermissionSetEnabledFeature extends Feature {
      */
     public inherited sharing class PermissionSetDAOImpl implements PermissionSetEnabledFeature.PermissionSetDAO {
         /**
-         * @descriptions Returns a list of Permission Set Assignments for a
+         * @description Returns a list of Permission Set Assignments for a
          * given permission set name and userId
          * @param userId
          * @param permissionSetName
