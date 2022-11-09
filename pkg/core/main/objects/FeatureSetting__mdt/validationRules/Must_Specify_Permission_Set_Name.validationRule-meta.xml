@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Must_Specify_Permission_Set_Name</fullName>
+    <active>true</active>
+    <description
+  >Must Specify Permission Set Name if Implementation is PermissionSetEnabledFeature</description>
+    <errorConditionFormula
+  >IF( Implementation__c  = &apos;PermissionSetEnabledFeature&apos;  &amp;&amp;  ISBLANK(PermissionSetName__c), true, false)</errorConditionFormula>
+    <errorDisplayField>PermissionSetName__c</errorDisplayField>
+    <errorMessage
+  >You Must Specify The API Name of the Permission Set</errorMessage>
+</ValidationRule>

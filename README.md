@@ -70,7 +70,7 @@ A wrapper arund the `FeatureManagement.checkPermission()` call
  * @description Feature Implementation that checks the running user for
  * a custom permission
  */
-public class CustomPermissionEnabledFeature implements Feature {
+public class CustomPermissionEnabledFeature extends Feature {
 
     /**
      * @description checks if the feature has been enabled via
@@ -108,7 +108,7 @@ A look up to a global custom metadata flag - `FeatureFlag__mdt`
  * @description Feature Implementation that uses a global
  * custom metadata flag.
  */
-public class CustomMetadataEnabledFeature implements Feature {
+public class CustomMetadataEnabledFeature extends Feature {
 
     /**
      * @description checks if the feature has been enabled via

@@ -18,9 +18,19 @@ public class CustomMetadataFeatureSettingsProvider implements FeatureSettingsPro
             return null;
         }
 
-        return new FeatureSetting(
+        FeatureSetting feature = new FeatureSetting(
             featureName,
             featureSettingMetadata?.Implementation__c
         );
+
+        List<String> requiredFields = feature.implementation.getRequiredFields();
+        Map<String, Object> params = new Map<String, Object>();
+
+        for (String field : requiredFields) {
+            params.put(field, featureSettingMetadata.get(field));
+        }
+
+        feature.implementation.setRequiredParameters(params);
+        return feature;
     }
 }
