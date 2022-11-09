@@ -19,7 +19,8 @@ public with sharing class PermissionSetEnabledFeature extends Feature {
     }
 
     /**
-     * @description
+     * @description Constructor
+     * @param dao PermissionSetDAO
      */
     public PermissionSetEnabledFeature(
         PermissionSetEnabledFeature.PermissionSetDAO dao
