@@ -90,6 +90,7 @@ public with sharing class PermissionSetEnabledFeature extends Feature {
          *
          * @return List of PermissionSetAssignments
          */
+        @SuppressWarnings('PMD.ApexCRUDViolation')
         public List<PermissionSetAssignment> getAssignmentsByUserIdAndPermissionSetName(
             Id userId,
             String permissionSetName
