@@ -68,13 +68,13 @@ private class FeatureSettingTest {
     /**
      * @description Mock Feature implementations
      */
-    public class TestFeature implements Feature {
+    public class TestFeature extends Feature {
         /**
          * @description always returns true
          * @param featureName
          * @return true
          */
-        public Boolean isEnabled(String featureName) {
+        public override Boolean isEnabled(String featureName) {
             return true;
         }
     }
