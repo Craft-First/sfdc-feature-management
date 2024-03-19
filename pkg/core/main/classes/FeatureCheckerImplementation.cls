@@ -25,7 +25,7 @@ public class FeatureCheckerImplementation implements FeatureChecker {
     }
 
     /**
-     * @desription Returns true if the feature is enabled
+     * @description Returns true if the feature is enabled
      * Fetches and instantiates the feature implementation and checks if
      * that feature is enabled. If no feature is found or cannot be
      * instantiated the default return is false
@@ -46,7 +46,7 @@ public class FeatureCheckerImplementation implements FeatureChecker {
     }
 
     /**
-     * @desription Returns true if the feature is enabled
+     * @description Returns true if the feature is enabled
      * Fetches and instantiates the feature implementation and checks if
      * that feature is enabled. If no feature is found or cannot be
      * instantiated the default return is false
