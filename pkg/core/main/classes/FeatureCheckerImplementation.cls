@@ -25,7 +25,7 @@ public class FeatureCheckerImplementation implements FeatureChecker {
     }
 
     /**
-     * @desription Returns true if the feature is enabled
+     * @description Returns true if the feature is enabled
      * Fetches and instantiates the feature implementation and checks if
      * that feature is enabled. If no feature is found or cannot be
      * instantiated the default return is false
@@ -43,5 +43,27 @@ public class FeatureCheckerImplementation implements FeatureChecker {
         }
 
         return featureSetting.implementation.isEnabled(featureName);
+    }
+
+    /**
+     * @description Returns true if the feature is enabled
+     * Fetches and instantiates the feature implementation and checks if
+     * that feature is enabled. If no feature is found or cannot be
+     * instantiated the default return is false
+     *
+     * @param featureName name of the feature to be checked
+     * @param options extra parameters required to
+     * @return true if enabled
+     */
+    public Boolean isEnabled(String featureName, Map<String, Object> options) {
+        FeatureSetting featureSetting = this.featureSettingsProvider.getFeatureSettingByName(
+            featureName
+        );
+
+        if (featureSetting == null) {
+            return false;
+        }
+
+        return featureSetting.implementation.isEnabled(featureName, options);
     }
 }

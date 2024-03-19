@@ -138,3 +138,33 @@ If the implemenations above do not meet your requirements - we can easily create
 custom Features by implementing the `Feature` interface. Once you have
 implmemented the Feature interface - you simply need to reference it in the
 `FeatureSetting__mdt` with your feature Name.
+
+### Passing options to your feature implementations
+
+If your custom feature is dependent on dynamic paramaters that you need to pass
+in at run time, this is possible by using the `options` parameter that can be be
+passed to the feature checker during execution. To allow for flexibility in this
+option type, this is a generic `Map<String, Object>`.
+
+```java
+public class MyClass {
+
+    private static String FEATURE_FLAG = 'myFeature';
+    private FeatureChecker featureChecker = new FeatureCheckerImplementation();
+
+    public void doSomething(String recordId) {
+        Map<String, Object> options = new Map<String, Object>{
+            'recordId' => recordId
+        };
+
+        if (featureChecker.isEnabled(FEATURE_FLAG, options)) {
+            ...
+            // do something
+            ...
+        }
+
+        return;
+    }
+
+}
+```

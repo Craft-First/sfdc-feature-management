@@ -77,5 +77,18 @@ private class FeatureSettingTest {
         public Boolean isEnabled(String featureName) {
             return true;
         }
+
+        /**
+         * @description always returns true
+         * @param featureName
+         * @param options
+         * @return true
+         */
+        public Boolean isEnabled(
+            String featureName,
+            Map<String, Object> options
+        ) {
+            return true;
+        }
     }
 }
