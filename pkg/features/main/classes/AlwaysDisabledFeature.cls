@@ -11,4 +11,15 @@ public class AlwaysDisabledFeature implements Feature {
     public Boolean isEnabled(String featureName) {
         return false;
     }
+
+    /**
+     * @description returns false for all features
+     *
+     * @param featureName
+     * @param options
+     * @return true
+     */
+    public Boolean isEnabled(String featureName, Map<String, Object> options) {
+        return false;
+    }
 }

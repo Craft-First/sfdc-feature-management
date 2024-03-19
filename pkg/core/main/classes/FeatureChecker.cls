@@ -9,4 +9,13 @@ public interface FeatureChecker {
      * @return true if enabled
      */
     Boolean isEnabled(String featureName);
+
+    /**
+     * @description Returns true if feature is enabled
+     * @param featureName feature to be checked
+     * @param options Generic Map of options to be
+     *  passed to the feature
+     * @return true if enabled
+     */
+    Boolean isEnabled(String featureName, Map<String, Object> options);
 }

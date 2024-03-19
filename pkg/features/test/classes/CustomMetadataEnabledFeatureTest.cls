@@ -9,5 +9,10 @@ private class CustomMetadataEnabledFeatureTest {
             !disabledFeature.isEnabled(featureName),
             'Feature should be disabled'
         );
+
+        System.assert(
+            !disabledFeature.isEnabled(featureName, new Map<String, Object>()),
+            'Feature should be disabled'
+        );
     }
 }

@@ -6,7 +6,10 @@ private class CustomPermissionEnabledFeatureTest {
         Feature disabledFeature = new CustomPermissionEnabledFeature();
 
         try {
-            disabledFeature.isEnabled(permissionName);
+            disabledFeature.isEnabled(
+                permissionName,
+                new Map<String, Object>()
+            );
         } catch (Exception ex) {
             System.assert(ex != null, 'An exception should have been thrown');
 
@@ -25,7 +28,10 @@ private class CustomPermissionEnabledFeatureTest {
         Feature disabledFeature = new CustomPermissionEnabledFeature();
 
         try {
-            disabledFeature.isEnabled(permissionName);
+            disabledFeature.isEnabled(
+                permissionName,
+                new Map<String, Object>()
+            );
         } catch (Exception ex) {
             System.assert(ex != null, 'An exception should have been thrown');
 
@@ -42,7 +48,10 @@ private class CustomPermissionEnabledFeatureTest {
         Feature disabledFeature = new CustomPermissionEnabledFeature();
 
         System.assert(
-            !disabledFeature.isEnabled(permissionName),
+            !disabledFeature.isEnabled(
+                permissionName,
+                new Map<String, Object>()
+            ),
             'Event should be disabled'
         );
     }

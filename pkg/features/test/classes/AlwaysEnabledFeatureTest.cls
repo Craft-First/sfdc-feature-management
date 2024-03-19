@@ -9,5 +9,10 @@ private class AlwaysEnabledFeatureTest {
             enabledFeature.isEnabled(featureName),
             'Feature should be enabled'
         );
+
+        System.assert(
+            enabledFeature.isEnabled(featureName, new Map<String, Object>()),
+            'Feature should be enabled'
+        );
     }
 }

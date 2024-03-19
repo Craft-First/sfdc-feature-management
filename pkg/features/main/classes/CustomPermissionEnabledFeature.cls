@@ -22,4 +22,16 @@ public class CustomPermissionEnabledFeature implements Feature {
 
         return FeatureManagement.checkPermission(featureName);
     }
+
+    /**
+     * @description checks if the feature has been enabled via
+     * a custom permission
+     *
+     * @param featureName
+     * @param options
+     * @return true if enabled
+     */
+    public Boolean isEnabled(String featureName, Map<String, Object> options) {
+        return this.isEnabled(featureName);
+    }
 }

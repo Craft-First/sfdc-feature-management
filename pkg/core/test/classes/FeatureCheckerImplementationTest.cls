@@ -12,6 +12,20 @@ private class FeatureCheckerImplementationTest {
     }
 
     @IsTest
+    private static void shouldReturnFalseWithNoImplementationWithOptions() {
+        String featureName = 'myTestFeature';
+        FeatureChecker featureManagement = new FeatureCheckerImplementation();
+
+        System.assert(
+            !featureManagement.isEnabled(
+                featureName,
+                new Map<String, Object>()
+            ),
+            'Feature should not be enabled'
+        );
+    }
+
+    @IsTest
     private static void shouldReturnTrueWithMockImplementation() {
         String featureName = 'myTestFeature';
         FeatureChecker featureManagement = new FeatureCheckerImplementation(
@@ -20,6 +34,19 @@ private class FeatureCheckerImplementationTest {
 
         System.assert(
             featureManagement.isEnabled(featureName),
+            'Feature should be enabled'
+        );
+    }
+
+    @IsTest
+    private static void shouldReturnTrueWithMockImplementationWithOptions() {
+        String featureName = 'myTestFeature';
+        FeatureChecker featureManagement = new FeatureCheckerImplementation(
+            new MockFeatureSettingsProvider()
+        );
+
+        System.assert(
+            featureManagement.isEnabled(featureName, new Map<String, Object>()),
             'Feature should be enabled'
         );
     }
@@ -49,6 +76,19 @@ private class FeatureCheckerImplementationTest {
          * @return true
          */
         public Boolean isEnabled(String featureName) {
+            return true;
+        }
+
+        /**
+         * @description always enabled
+         * @param featureName
+         * @param options
+         * @return true
+         */
+        public Boolean isEnabled(
+            String featureName,
+            Map<String, Object> options
+        ) {
             return true;
         }
     }
